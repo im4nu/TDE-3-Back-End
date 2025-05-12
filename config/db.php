@@ -1,11 +1,13 @@
 <?php
-$host = '192.168.10.20';
+$host = '127.0.0.1';
 $dbname = 'locadora';
-$username = 'root';
-$password = '';
+$user = 'root';
+$pass = 'nova_senha';
 
-$conexao = new mysqli($host, $username, $password, $dbname);
-
-if ($conexao->connect_error) {
-    die("Erro ao conectar ao banco de dados: " . $conexao->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
 }
+?>
