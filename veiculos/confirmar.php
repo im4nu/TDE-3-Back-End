@@ -11,22 +11,56 @@
         <?php
         require_once '../config/db.php';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'] ?? null;
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $id = $_POST['id'] ?? null;
+                $cliente_id = $_POST['cliente'] ?? null;
+                $nome = $_POST['nome'] ?? '';
+                $email = $_POST['email'] ?? '';
+                $telefone = $_POST['telefone'] ?? '';
+                $data_inicio = $_POST['data_inicio'] ?? '';
+                $data_fim = $_POST['data_fim'] ?? '';
 
-            if ($id) {
-                // Atualizar o status do veículo para "alugado"
-                $stmt = $pdo->prepare("UPDATE veiculos SET status = 'alugado' WHERE id = ?");
-                $stmt->execute([$id]);
+                if (!$id || !$data_inicio || !$data_fim) {
+                    throw new Exception("Campos obrigatórios não foram preenchidos.");
+                }
+
+                if ($cliente_id) {
+                    // Registrar o aluguel para um cliente existente
+                    $stmt = $pdo->prepare("INSERT INTO alugueis (cliente_id, veiculo_id, data_inicio, data_fim) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$cliente_id, $id, $data_inicio, $data_fim]);
+                } else {
+                    if (!$nome || !$email || !$telefone) {
+                        throw new Exception("Dados do cliente não foram preenchidos.");
+                    }
+
+                    // Verificar se o cliente já existe pelo email
+                    $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ?");
+                    $stmt->execute([$email]);
+                    $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    if ($cliente) {
+                        $cliente_id = $cliente['id'];
+                    } else {
+                        // Cadastrar novo cliente
+                        $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, telefone) VALUES (?, ?, ?)");
+                        $stmt->execute([$nome, $email, $telefone]);
+                        $cliente_id = $pdo->lastInsertId();
+                    }
+
+                    // Registrar o aluguel para o novo cliente
+                    $stmt = $pdo->prepare("INSERT INTO alugueis (cliente_id, veiculo_id, data_inicio, data_fim) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$cliente_id, $id, $data_inicio, $data_fim]);
+                }
 
                 echo "<h1>Aluguel Confirmado!</h1>";
-                echo "<p>O veículo com ID {$id} foi alugado com sucesso.</p>";
+                echo "<p>O veículo com ID {$id} foi alugado com sucesso até {$data_fim}.</p>";
                 echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
-            } else {
-                echo "<h1>Erro</h1>";
-                echo "<p>Erro ao processar o aluguel. Por favor, tente novamente.</p>";
-                echo "<a href='listar.php' class='link'>Voltar</a>";
             }
+        } catch (Exception $e) {
+            echo "<h1>Erro</h1>";
+            echo "<p>Ocorreu um erro: " . $e->getMessage() . "</p>";
+            echo "<a href='listar.php' class='link'>Voltar</a>";
         }
         ?>
     </div>
