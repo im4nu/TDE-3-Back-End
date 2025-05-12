@@ -54,8 +54,9 @@
     <div class="container">
         <h1>Bem-vindo à Locadora</h1>
         <div class="links">
-            <a href="clientes/index.php" class="link">Clientes</a>
-            <a href="veiculos/index.php" class="link">Veículos</a>
+        <a href="clientes/index.php" class="link">Clientes</a>
+        <a href="veiculos/index.php" class="link">Veículos</a>
+        <a href="veiculos/listar.php" class="link">Alugar Veículo</a>
         </div>
     </div>
 </body>

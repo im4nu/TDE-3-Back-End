@@ -63,3 +63,31 @@ form button:hover {
 .back-link:hover {
   text-decoration: underline;
 }
+
+/* Estilo moderno para o botão "Alugar" */
+.link {
+  display: inline-block;
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(45deg, #0056b3, #003f7f);
+}
+
+.link.disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
