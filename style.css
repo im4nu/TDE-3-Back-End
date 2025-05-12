@@ -1,25 +1,32 @@
+/* Estilo global atualizado para um design moderno e responsivo */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: #f4f4f4;
   color: #333;
 }
 
 .container {
-  max-width: 600px;
-  margin: 50px auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+h1,
+h2,
+h3 {
+  font-family: "Roboto", sans-serif;
+  color: #222;
+}
+
 h1 {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #444;
 }
 
 form label {
@@ -64,30 +71,72 @@ form button:hover {
   text-decoration: underline;
 }
 
-/* Estilo moderno para o botão "Alugar" */
+/* Botões modernos */
+button,
 .link {
   display: inline-block;
-  padding: 15px 30px;
+  padding: 12px 20px;
   background: linear-gradient(45deg, #007bff, #0056b3);
   color: #fff;
   text-decoration: none;
+  border: none;
   border-radius: 8px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+button:hover,
 .link:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   background: linear-gradient(45deg, #0056b3, #003f7f);
 }
 
+button.disabled,
 .link.disabled {
   background: #ccc;
   color: #666;
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
+}
+
+/* Layout responsivo */
+.vehicle-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.vehicle-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: auto;
+}
+
+.vehicle-card h3 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
+.vehicle-card p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #555;
 }

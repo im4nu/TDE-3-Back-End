@@ -1,4 +1,3 @@
-<!-- filepath: /home/manu/codes/locadora-php/veiculos/edit.php -->
 <?php
 require_once '../config/db.php';
 
@@ -9,8 +8,8 @@ $stmt->execute([$id]);
 $veiculo = $stmt->fetch();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("UPDATE veiculos SET modelo = ?, marca = ?, ano = ?, placa = ? WHERE id = ?");
-    $stmt->execute([$_POST['modelo'], $_POST['marca'], $_POST['ano'], $_POST['placa'], $id]);
+    $stmt = $pdo->prepare("UPDATE veiculos SET modelo = ?, marca = ?, ano = ?, placa = ?, imagem = ? WHERE id = ?");
+    $stmt->execute([$_POST['modelo'], $_POST['marca'], $_POST['ano'], $_POST['placa'], $_POST['imagem'], $id]);
     header('Location: index.php');
 }
 ?>
@@ -41,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="placa">Placa:</label>
             <input type="text" id="placa" name="placa" value="<?= $veiculo['placa'] ?>">
+
+            <label for="imagem">Link da Imagem:</label>
+            <input type="url" id="imagem" name="imagem" value="<?= htmlspecialchars($veiculo['imagem']) ?>" required>
 
             <button type="submit">Atualizar</button>
         </form>
