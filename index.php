@@ -1,3 +1,4 @@
+<!-- filepath: /home/manu/codes/locadora-php/index.php -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,14 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locadora</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .link {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .link:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo à Locadora</h1>
-    <nav>
-        <ul>
-            <li><a href="clientes/index.php">Clientes</a></li>
-            <li><a href="veiculos/index.php">Veículos</a></li>
-        </ul>
-    </nav>
+    <div class="container">
+        <h1>Bem-vindo à Locadora</h1>
+        <div class="links">
+            <a href="clientes/index.php" class="link">Clientes</a>
+            <a href="veiculos/index.php" class="link">Veículos</a>
+        </div>
+    </div>
 </body>
 </html>
