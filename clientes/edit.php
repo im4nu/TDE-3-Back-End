@@ -1,4 +1,3 @@
-<!-- filepath: /home/manu/codes/locadora-php/clientes/edit.php -->
 <?php
 require_once '../config/db.php';
 
@@ -6,11 +5,11 @@ $id = $_GET['id'];
 
 $stmt = $pdo->prepare("SELECT * FROM clientes WHERE id = ?");
 $stmt->execute([$id]);
-$cliente = $stmt->fetch();
+$cliente = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("UPDATE clientes SET nome = ?, email = ? WHERE id = ?");
-    $stmt->execute([$_POST['nome'], $_POST['email'], $id]);
+    $stmt = $pdo->prepare("UPDATE clientes SET nome = ?, email = ?, telefone = ? WHERE id = ?");
+    $stmt->execute([$_POST['nome'], $_POST['email'], $_POST['telefone'], $id]);
     header('Location: index.php');
 }
 ?>
@@ -22,6 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cliente</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#telefone').mask('(00)00000-0000');
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -95,12 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Editar Cliente</h1>
         <form method="post">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<?= $cliente['nome'] ?>" required>
+            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($cliente['nome']); ?>" required>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?= $cliente['email'] ?>" required>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($cliente['email']); ?>" required>
 
-            <button type="submit">Atualizar</button>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" value="<?php echo htmlspecialchars($cliente['telefone']); ?>" required>
+
+            <button type="submit">Salvar</button>
         </form>
         <a href="index.php" class="back-link">← Voltar</a>
     </div>

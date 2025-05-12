@@ -1,4 +1,3 @@
-<!-- filepath: /home/manu/codes/locadora-php/veiculos/index.php -->
 <?php
 require_once '../config/db.php';
 
@@ -115,6 +114,7 @@ $veiculos = $stmt->fetchAll();
                     <th>Marca</th>
                     <th>Ano</th>
                     <th>Placa</th>
+                    <th>Status</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -126,6 +126,7 @@ $veiculos = $stmt->fetchAll();
                         <td><?= $veiculo['marca'] ?></td>
                         <td><?= $veiculo['ano'] ?></td>
                         <td><?= $veiculo['placa'] ?></td>
+                        <td><?= $veiculo['status'] ?></td>
                         <td class="actions">
                             <a href="edit.php?id=<?= $veiculo['id'] ?>">Editar</a>
                             <a href="delete.php?id=<?= $veiculo['id'] ?>" onclick="return confirm('Tem certeza?')">Excluir</a>

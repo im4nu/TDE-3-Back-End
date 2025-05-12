@@ -1,4 +1,3 @@
-<!-- filepath: /home/manu/codes/locadora-php/clientes/index.php -->
 <?php
 require_once '../config/db.php';
 
@@ -113,6 +112,7 @@ $clientes = $stmt->fetchAll();
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Email</th>
+                    <th>Telefone</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -122,6 +122,7 @@ $clientes = $stmt->fetchAll();
                         <td><?= $cliente['id'] ?></td>
                         <td><?= $cliente['nome'] ?></td>
                         <td><?= $cliente['email'] ?></td>
+                        <td><?php echo htmlspecialchars($cliente['telefone']); ?></td>
                         <td class="actions">
                             <a href="edit.php?id=<?= $cliente['id'] ?>">Editar</a>
                             <a href="delete.php?id=<?= $cliente['id'] ?>" onclick="return confirm('Tem certeza?')">Excluir</a>

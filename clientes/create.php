@@ -1,10 +1,9 @@
-<!-- filepath: /home/manu/codes/locadora-php/clientes/create.php -->
 <?php
 require_once '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("INSERT INTO clientes (nome, email) VALUES (?, ?)");
-    $stmt->execute([$_POST['nome'], $_POST['email']]);
+    $stmt = $pdo->prepare("INSERT INTO clientes (nome, email, telefone) VALUES (?, ?, ?)");
+    $stmt->execute([$_POST['nome'], $_POST['email'], $_POST['telefone']]);
     header('Location: index.php');
 }
 ?>
@@ -83,6 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#telefone').mask('(00)00000-0000');
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -93,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" required>
 
             <button type="submit">Salvar</button>
         </form>

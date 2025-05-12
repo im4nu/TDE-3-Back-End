@@ -1,6 +1,6 @@
 <?php
 $host = '127.0.0.1';
-$dbname = 'locadora';
+$dbname = 'locadora_2';
 $user = 'root';
 $pass = 'nova_senha';
 

@@ -53,8 +53,20 @@
                     $stmt->execute([$cliente_id, $id, $data_inicio, $data_fim]);
                 }
 
+                // Obter informações do veículo
+                $stmt = $pdo->prepare("SELECT * FROM veiculos WHERE id = ?");
+                $stmt->execute([$id]);
+                $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+
                 echo "<h1>Aluguel Confirmado!</h1>";
                 echo "<p>O veículo com ID {$id} foi alugado com sucesso até {$data_fim}.</p>";
+                echo "<div class='vehicle-card'>";
+                echo "<img src='" . htmlspecialchars($veiculo['imagem'], ENT_QUOTES, 'UTF-8') . "' alt='Imagem do veículo' style='width: 100%; max-width: 300px;'>";
+                echo "<h3>" . htmlspecialchars($veiculo['modelo'], ENT_QUOTES, 'UTF-8') . "</h3>";
+                echo "<p><strong>Marca:</strong> " . htmlspecialchars($veiculo['marca'], ENT_QUOTES, 'UTF-8') . "</p>";
+                echo "<p><strong>Ano:</strong> " . htmlspecialchars($veiculo['ano'], ENT_QUOTES, 'UTF-8') . "</p>";
+                echo "<p><strong>Placa:</strong> " . htmlspecialchars($veiculo['placa'], ENT_QUOTES, 'UTF-8') . "</p>";
+                echo "</div>";
                 echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
             }
         } catch (Exception $e) {

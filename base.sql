@@ -28,6 +28,9 @@ CREATE TABLE alugueis (
     data_inicio DATE NOT NULL,
     data_fim DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cliente_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE,
     FOREIGN KEY (veiculo_id) REFERENCES veiculos(id) ON DELETE CASCADE
 );
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'nova_senha';
+FLUSH PRIVILEGES;

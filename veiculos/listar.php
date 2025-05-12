@@ -1,6 +1,7 @@
 <?php
 require_once '../config/db.php';
 
+// Atualizar a consulta para garantir que o status atualizado seja refletido
 $stmt = $pdo->query("SELECT * FROM veiculos");
 $veiculos = $stmt->fetchAll();
 ?>
@@ -25,13 +26,15 @@ $veiculos = $stmt->fetchAll();
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
+            padding: 10px 20%;
+            height: 70px;
         }
 
         .navbar a {
@@ -47,43 +50,51 @@ $veiculos = $stmt->fetchAll();
         }
 
         .hero {
-            height: 100vh;
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
+            height: 70vh;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero_mask {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            background: #000;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        .hero-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            animation: fadeInDown 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero a {
-            padding: 15px 30px;
-            background: white;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .hero a:hover {
-            background: #0056b3;
+            height: 70%;
+            z-index: 1;
             color: white;
-            transform: scale(1.05);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            color: white;
         }
 
         @keyframes fadeInDown {
@@ -187,16 +198,21 @@ $veiculos = $stmt->fetchAll();
     <div class="navbar">
         <div class="logo">Locadora</div>
         <div class="links">
-            <a href="#hero">Home</a>
-            <a href="#about">Sobre</a>
-            <a href="#veiculos">Veículos</a>
+            <a href="../veiculos/index.php">Veículos</a>
+            <a href="../clientes/index.php">Clientes</a>
         </div>
     </div>
 
     <div class="hero" id="hero">
-        <h1>Descubra o Carro dos Seus Sonhos</h1>
-        <p>Alugue veículos de luxo e conforto com apenas alguns cliques.</p>
-        <a href="#veiculos">Ver Veículos</a>
+        <video autoplay muted loop>
+            <source src="../src/hero.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+        <div class="hero_mask"></div>
+        <div class="hero-content">
+            <h1>Bem-vindo à Locadora</h1>
+            <p>Encontre o veículo perfeito para você!</p>
+        </div>
     </div>
 
     <div class="about" id="about">
