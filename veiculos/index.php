@@ -86,6 +86,10 @@ $veiculos = $stmt->fetchAll();
             text-decoration: underline;
         }
 
+        .text{
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
         .back-link {
             display: block;
             margin-top: 20px;
@@ -98,44 +102,83 @@ $veiculos = $stmt->fetchAll();
         .back-link:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 768px) {
+            .desktop-content {
+                display: none;
+            }
+            .mobile-message {
+                display: block;
+                text-align: center;
+                font-size: 1.2rem;
+                color: #ff0000;
+                margin-top: 20px;
+            }
+
+            .mobile-message img {
+                max-width: 150px; /* Aumentar o tamanho da ilustração */
+            }
+
+            .mobile-message p {
+                color: #007BFF; /* Alterar a cor do texto para azul do sistema */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .desktop-content {
+                display: block;
+            }
+            .mobile-message {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Veículos</h1>
-        <div class="actions">
-            <a href="create.php" class="btn">+ Novo Veículo</a>
+        <div class="mobile-message">
+            <img src="../src/safe.png" alt="Ilustração de segurança" style="max-width: 100px; margin-bottom: 10px;">
+            <p class="text">Disponível apenas para o administrador</p>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Modelo</th>
-                    <th>Marca</th>
-                    <th>Ano</th>
-                    <th>Placa</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($veiculos as $veiculo): ?>
+        <div class="desktop-content">
+            <div class="actions">
+                <a href="create.php" class="btn">+ Novo Veículo</a>
+            </div>
+            <table>
+                <thead>
                     <tr>
-                        <td><?= $veiculo['id'] ?></td>
-                        <td><?= $veiculo['modelo'] ?></td>
-                        <td><?= $veiculo['marca'] ?></td>
-                        <td><?= $veiculo['ano'] ?></td>
-                        <td><?= $veiculo['placa'] ?></td>
-                        <td><?= $veiculo['status'] ?></td>
-                        <td class="actions">
-                            <a href="edit.php?id=<?= $veiculo['id'] ?>">Editar</a>
-                            <a href="delete.php?id=<?= $veiculo['id'] ?>" onclick="return confirm('Tem certeza?')">Excluir</a>
-                        </td>
+                        <th>ID</th>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Ano</th>
+                        <th>Placa</th>
+                        <th>Status</th>
+                        <th>Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <a href="../index.php" class="back-link">← Voltar</a>
+                </thead>
+                <tbody>
+                    <?php foreach ($veiculos as $veiculo): ?>
+                        <tr>
+                            <td><?= $veiculo['id'] ?></td>
+                            <td><?= $veiculo['modelo'] ?></td>
+                            <td><?= $veiculo['marca'] ?></td>
+                            <td><?= $veiculo['ano'] ?></td>
+                            <td><?= $veiculo['placa'] ?></td>
+                            <td><?= $veiculo['status'] ?></td>
+                            <td class="actions">
+                                <a href="edit.php?id=<?= $veiculo['id'] ?>">Editar</a>
+                                <a href="delete.php?id=<?= $veiculo['id'] ?>" onclick="return confirm('Tem certeza?')">Excluir</a>
+                                <?php if ($veiculo['status'] == 'alugado'): ?>
+                                    <a href="cancelar.php?id=<?= $veiculo['id'] ?>" onclick="return confirm('Tem certeza que deseja cancelar o aluguel?')">Cancelar Aluguel</a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <a href="../index.php" class="back-link">← Voltar</a>
+        </div>
     </div>
 </body>
 </html>

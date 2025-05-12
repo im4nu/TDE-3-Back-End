@@ -118,6 +118,7 @@ button.disabled,
   overflow: hidden;
   text-align: center;
   transition: transform 0.3s ease;
+  padding-bottom: 20px; /* Aumentar o padding inferior */
 }
 
 .vehicle-card:hover {

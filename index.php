@@ -1,3 +1,7 @@
+<?php
+header("Location: veiculos/listar.php");
+exit;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -25,24 +25,27 @@ $veiculos = $stmt->fetchAll();
         .navbar {
             position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.3);
+            width: 80%;
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20%;
+            padding: 10px 10%;
             height: 70px;
         }
 
         .navbar a {
             text-decoration: none;
-            color: #333;
+            color: #fff;
             margin: 0 15px;
             font-weight: bold;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
         }
 
         .navbar a:hover {
@@ -50,7 +53,7 @@ $veiculos = $stmt->fetchAll();
         }
 
         .hero {
-            height: 70vh;
+            height: 75vh;
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -192,16 +195,60 @@ $veiculos = $stmt->fetchAll();
             background-color: #333;
             color: #fff;
         }
+        
+        .links{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo{
+            color: white;
+        }
+
+        nav {
+            background-color: #007BFF;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">Locadora</div>
+        <div class="logo">
+            <p>Locadora</p>
+        </div>
+
         <div class="links">
             <a href="../veiculos/index.php">Veículos</a>
             <a href="../clientes/index.php">Clientes</a>
         </div>
     </div>
+
 
     <div class="hero" id="hero">
         <video autoplay muted loop>
