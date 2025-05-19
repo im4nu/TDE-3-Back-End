@@ -1,6 +1,6 @@
 <?php
 $host = '127.0.0.1';
-$dbname = 'locadora';
+$dbname = 'tde3';
 $user = 'root';
 $pass = 'nova_senha';
 

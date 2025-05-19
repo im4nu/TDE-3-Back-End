@@ -12,8 +12,14 @@
         require_once '../config/db.php';
 
         try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_SERVER['REQUEST_METHOD'] !== 'GET') {
+                echo "<h1>Erro</h1>";
+                echo "<p>Esta página deve ser acessada após o envio de um formulário válido.</p>";
+                echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
+                exit;
+            }
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $id = $_POST['id'] ?? null;
                 $cliente_id = $_POST['cliente'] ?? null;
                 $nome = $_POST['nome'] ?? '';
                 $email = $_POST['email'] ?? '';
@@ -21,7 +27,7 @@
                 $data_inicio = $_POST['data_inicio'] ?? '';
                 $data_fim = $_POST['data_fim'] ?? '';
 
-                if (!$id || !$data_inicio || !$data_fim) {
+                if (!$data_inicio || !$data_fim) {
                     throw new Exception("Campos obrigatórios não foram preenchidos.");
                 }
 
@@ -52,23 +58,40 @@
                     $stmt = $pdo->prepare("INSERT INTO alugueis (cliente_id, veiculo_id, data_inicio, data_fim) VALUES (?, ?, ?, ?)");
                     $stmt->execute([$cliente_id, $id, $data_inicio, $data_fim]);
                 }
-
-                // Obter informações do veículo
-                $stmt = $pdo->prepare("SELECT * FROM veiculos WHERE id = ?");
-                $stmt->execute([$id]);
-                $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                echo "<h1>Aluguel Confirmado!</h1>";
-                echo "<p>O veículo com ID {$id} foi alugado com sucesso até {$data_fim}.</p>";
-                echo "<div class='vehicle-card'>";
-                echo "<img src='" . htmlspecialchars($veiculo['imagem'], ENT_QUOTES, 'UTF-8') . "' alt='Imagem do veículo' style='width: 100%; max-width: 300px;'>";
-                echo "<h3>" . htmlspecialchars($veiculo['modelo'], ENT_QUOTES, 'UTF-8') . "</h3>";
-                echo "<p><strong>Marca:</strong> " . htmlspecialchars($veiculo['marca'], ENT_QUOTES, 'UTF-8') . "</p>";
-                echo "<p><strong>Ano:</strong> " . htmlspecialchars($veiculo['ano'], ENT_QUOTES, 'UTF-8') . "</p>";
-                echo "<p><strong>Placa:</strong> " . htmlspecialchars($veiculo['placa'], ENT_QUOTES, 'UTF-8') . "</p>";
-                echo "</div>";
-                echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
             }
+
+            // Permitir acesso via GET para redirecionamento após o aluguel
+            $id = $_GET['id'] ?? null;
+
+            if (!$id) {
+                echo "<h1>Erro</h1>";
+                echo "<p>O ID do veículo não foi fornecido.</p>";
+                echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
+                exit;
+            }
+
+            // Obter informações do veículo
+            $stmt = $pdo->prepare("SELECT * FROM veiculos WHERE id = ?");
+            $stmt->execute([$id]);
+            $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$veiculo) {
+                echo "<h1>Erro</h1>";
+                echo "<p>Veículo não encontrado.</p>";
+                echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
+                exit;
+            }
+
+            echo "<h1>Aluguel Confirmado!</h1>";
+            echo "<p>O veículo com ID {$id} foi alugado com sucesso.</p>";
+            echo "<div class='vehicle-card'>";
+            echo "<img src='" . htmlspecialchars($veiculo['imagem'], ENT_QUOTES, 'UTF-8') . "' alt='Imagem do veículo' style='width: 100%; max-width: 300px;'>";
+            echo "<h3>" . htmlspecialchars($veiculo['modelo'], ENT_QUOTES, 'UTF-8') . "</h3>";
+            echo "<p><strong>Marca:</strong> " . htmlspecialchars($veiculo['marca'], ENT_QUOTES, 'UTF-8') . "</p>";
+            echo "<p><strong>Ano:</strong> " . htmlspecialchars($veiculo['ano'], ENT_QUOTES, 'UTF-8') . "</p>";
+            echo "<p><strong>Placa:</strong> " . htmlspecialchars($veiculo['placa'], ENT_QUOTES, 'UTF-8') . "</p>";
+            echo "</div>";
+            echo "<a href='listar.php' class='link'>Voltar à Lista de Veículos</a>";
         } catch (Exception $e) {
             echo "<h1>Erro</h1>";
             echo "<p>Ocorreu um erro: " . $e->getMessage() . "</p>";
